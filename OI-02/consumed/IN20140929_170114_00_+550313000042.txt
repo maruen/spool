@@ -1,0 +1,1 @@
+Voce nao possui saldo suficiente pra enviar o SMS. Use o TORPEDO A COBRAR para se comunicar. Quem recebe paga RS0,45. Envie a mensagem p/ 9090+DDD+NumeroDestino

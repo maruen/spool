@@ -1,0 +1,1 @@
+Legal , mais quem e bin dev etc lib mnt opt run srv sys tmp usr var
