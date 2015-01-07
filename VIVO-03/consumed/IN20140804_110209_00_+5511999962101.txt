@@ -1,1 +1,0 @@
-Quem  vc boot home proc root sbin

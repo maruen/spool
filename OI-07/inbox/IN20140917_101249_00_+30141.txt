@@ -1,1 +1,0 @@
-Enigma: POCO - Eh um objeto Responda com a palavra que acredita ser correta.

@@ -1,1 +1,0 @@
-Vai tomar no cu

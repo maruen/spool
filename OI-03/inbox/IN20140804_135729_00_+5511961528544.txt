@@ -1,1 +1,0 @@
-Quem  boot home proc root sbin

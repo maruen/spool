@@ -41,8 +41,10 @@ for FILE in $SMS_MESSAGES ; do
 
    DATE=`echo ${FILE} | cut -c3-17`
 	TEXT_WITHOUT_LINE_BREAKS=`tr '\n', ' ' < ${INBOX}/${FILE}`
+	`echo $TEXT_WITHOUT_LINE_BREAKS > ${INBOX}/${FILE}`
    #TEXT_ENCODED=`/bin/cat ${INBOX}/${FILE} | sed -f ${ATSMS_SPOOL}/urlencode.sed`
-   TEXT_ENCODED=`echo ${TEXT_WITHOUT_LINE_BREAKS} | sed -f ${ATSMS_SPOOL}/urlencode.sed`
+   #TEXT_ENCODED=`echo ${TEXT_WITHOUT_LINE_BREAKS} | sed -f ${ATSMS_SPOOL}/urlencode.sed`
+	TEXT_ENCODED=`${ATSMS_SPOOL}/urlencode.sh ${INBOX}/${FILE}`
    SMS_URL=`echo ${URL} | sed "s/PHONE/${PHONE}/" | sed "s/DATE/${DATE}/" | sed "s/TEXT/${TEXT_ENCODED}/"`
    echo "SMS[Telefone: ${PHONE}, Data: ${DATE}, Texto: ${TEXT_ENCODED} ]"		
    echo "Posting to URL: ${SMS_URL}" 
