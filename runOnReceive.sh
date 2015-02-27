@@ -10,41 +10,17 @@ for FILE in $SMS_MESSAGES ; do
    
    if [ `echo ${FILE} | grep -c "+55" ` -gt 0 ] 
    then
-		DDD=`echo ${FILE} | cut -c25-26`
-		case "${DDD}" in
-
-			"11"|"16"|"19"|"21"|"22"|"24"|"27"|"28")
-						echo "contains +55 and is 9 digit"
-						PHONE=`echo ${FILE} | cut -c25-35` 
-						;;
-			 *)
-			
-					echo "contains +55 and is 8 digits"
-					PHONE=`echo ${FILE} | cut -c25-34` 
-					;;
-		esac
+	PHONE=`echo ${FILE} | cut -c25-35` 
    else
-		DDD=`echo ${FILE} | cut -c23-24`
-		case "${DDD}" in
-
-			"11"|"16"|"19"|"21"|"22"|"24"|"27"|"28")
-						echo "without +55 and is 9 digit"
-						PHONE=`echo ${FILE} | cut -c23-33` 
-						;;
-			 *)
-			
-					echo "without +55 and is 8 digits"
-					PHONE=`echo ${FILE} | cut -c23-33` 
-					;;
-		esac
-	fi	
+	PHONE=`echo ${FILE} | cut -c23-33` 
+   fi	
 
    DATE=`echo ${FILE} | cut -c3-17`
-	TEXT_WITHOUT_LINE_BREAKS=`tr '\n', ' ' < ${INBOX}/${FILE}`
-	`echo $TEXT_WITHOUT_LINE_BREAKS > ${INBOX}/${FILE}`
+   TEXT_WITHOUT_LINE_BREAKS=`tr '\n', ' ' < ${INBOX}/${FILE}`
+   `echo $TEXT_WITHOUT_LINE_BREAKS > ${INBOX}/${FILE}`
    #TEXT_ENCODED=`/bin/cat ${INBOX}/${FILE} | sed -f ${ATSMS_SPOOL}/urlencode.sed`
    #TEXT_ENCODED=`echo ${TEXT_WITHOUT_LINE_BREAKS} | sed -f ${ATSMS_SPOOL}/urlencode.sed`
-	TEXT_ENCODED=`${ATSMS_SPOOL}/urlencode.sh ${INBOX}/${FILE}`
+   TEXT_ENCODED=`${ATSMS_SPOOL}/urlencode.sh ${INBOX}/${FILE}`
    SMS_URL=`echo ${URL} | sed "s/PHONE/${PHONE}/" | sed "s/DATE/${DATE}/" | sed "s/TEXT/${TEXT_ENCODED}/"`
    echo "SMS[Telefone: ${PHONE}, Data: ${DATE}, Texto: ${TEXT_ENCODED} ]"		
    echo "Posting to URL: ${SMS_URL}" 
