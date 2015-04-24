@@ -3,7 +3,7 @@ ATSMS_SPOOL=/var/spool/atsms
 INBOX=${ATSMS_SPOOL}/$1/inbox
 CONSUMED=${ATSMS_SPOOL}/$1/consumed
 SMS_MESSAGES=`ls ${INBOX}`
-URL_PROD="https://www.atsms.com.br/sms?phone=PHONE&date=DATE&message=TEXT&line=$1"
+URL_PROD="https://www.atsms.com.br/sms?msisdn=PHONE&date=DATE&message=TEXT&line=$1"
 URL_DEV="https://192.168.1.34:9443/sms?msisdn=PHONE&date=DATE&message=TEXT&line=$1"
 POST_TO_DEV="TRUE"
 
