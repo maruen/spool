@@ -5,15 +5,17 @@ CONSUMED=${ATSMS_SPOOL}/$1/consumed
 SMS_MESSAGES=`ls ${INBOX}`
 URL_PROD="https://www.atsms.com.br/sms?msisdn=PHONE&date=DATE&message=TEXT&line=$1"
 URL_DEV="https://192.168.1.34:9443/sms?msisdn=PHONE&date=DATE&message=TEXT&line=$1"
-POST_TO_DEV="TRUE"
+POST_TO_DEV="FALSE"
 
 for FILE in $SMS_MESSAGES ; do
    
-   if [ `echo ${FILE} | grep -c "+55" ` -gt 0 ] 
+   FILE_LENGTH=`echo ${FILE} | wc -c`
+   if   [ ${FILE_LENGTH}  -eq 40 ]
    then
 	PHONE=`echo ${FILE} | cut -c25-35` 
-   else
-	PHONE=`echo ${FILE} | cut -c23-33` 
+   elif [ ${FILE_LENGTH} -eq 39  ]
+   then 
+	PHONE=`echo ${FILE} | cut -c25-34` 
    fi	
 
    DATE=`echo ${FILE} | cut -c3-17`
@@ -30,7 +32,7 @@ for FILE in $SMS_MESSAGES ; do
 	   POST=`curl -s --sslv3 --insecure $SMS_URL_PROD`
   	   echo "Result of Post was: ${POST}"
   
- 	   if [[ "$POST" == "OK" ]]; then 
+ 	   if [[ "$POST" == "OK"  ||  "$POST" == "MESSAGE_ALREADY_INSERTED" ]]; then 
    		MOVE_FILE="mv -f ${INBOX}/${FILE} ${CONSUMED}"
    		echo "MOVE_FILE: ${MOVE_FILE}"
 		${MOVE_FILE}
