@@ -37,7 +37,10 @@ for FILE in $SMS_MESSAGES ; do
    		echo "MOVE_FILE: ${MOVE_FILE}"
 		${MOVE_FILE}
 	   else
-		echo "ATSMS Server is down..."
+		if [[ "$POST" != "OK" && "$POST" != "MESSAGE_ALREADY_INSERTED" ]]; then
+			echo "ATSMS Server is probably down...."
+		fi		
+
 	   fi
 
 	   if [[ "$POST_TO_DEV" == "TRUE" ]]; then
