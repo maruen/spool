@@ -9,7 +9,7 @@ for FILE in $SMS_MESSAGES ; do
    
    PHONE=`echo ${FILE} | cut -c17-` 
    DATE=`echo ${FILE} | cut -c1-15`
-   TEXT_WITHOUT_LINE_BREAKS=`tr '\n', ' ' < ${INBOX}/${FILE}`
+   TEXT_WITHOUT_LINE_BREAKS=`sed ':a;N;$!ba;s/\n/ATSMS_LINE_BREAK/g' <  ${INBOX}/${FILE}`
    `echo $TEXT_WITHOUT_LINE_BREAKS > ${INBOX}/${FILE}`
    TEXT_ENCODED=`${ATSMS_SPOOL}/urlencode.sh ${INBOX}/${FILE}`
    SMS_URL_PROD=`echo ${URL_PROD} | sed "s/PHONE/${PHONE}/" | sed "s/DATE/${DATE}/" | sed "s/TEXT/${TEXT_ENCODED}/"`
